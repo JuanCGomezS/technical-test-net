@@ -1,0 +1,92 @@
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="titulo">Administrador Usuarios .NET</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="titulo">{{ accion | uppercase }} USUARIO</h2>
+
+                    <form [formGroup]="form" (ngSubmit)="guardarUsuario()">
+                        <div class="input-group input-group-lg mb-3">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-user" [class.green-icon]="this.form.get('nombre')?.valid"
+                                    [class.red-icon]="this.form.get('nombre')?.invalid && this.form.get('nombre')?.touched"></i>
+                            </span>
+                            <input formControlName="nombre" type="text" class="form-control" placeholder="Nombre">
+                        </div>
+
+                        <div class="input-group input-group-lg mb-3">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-user" [class.green-icon]="this.form.get('apellido')?.valid"
+                                    [class.red-icon]="this.form.get('apellido')?.invalid && this.form.get('apellido')?.touched"></i>
+                            </span>
+                            <input formControlName="apellido" type="text" class="form-control" placeholder="Apellido">
+                        </div>
+
+                        <div class="input-group input-group-lg mb-3">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-envelope" [class.green-icon]="this.form.get('correo')?.valid"
+                                    [class.red-icon]="this.form.get('correo')?.invalid && this.form.get('correo')?.touched"></i>
+                            </span>
+                            <input formControlName="correo" type="text" class="form-control" placeholder="Correo">
+                        </div>
+
+                        <div class="input-group input-group-lg mb-3">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-phone" [class.green-icon]="this.form.get('telefono')?.valid"
+                                    [class.red-icon]="this.form.get('telefono')?.invalid && this.form.get('telefono')?.touched"></i>
+                            </span>
+                            <input formControlName="telefono" maxlength="10" type="text" class="form-control"
+                                placeholder="Telefono">
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button [disabled]="this.form.invalid" type="submit" class="btn btn-success btn-lg">
+                                <i class="fa-solid fa-database me-3"></i>Aceptar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="titulo">Listado de usuarios</h2>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr *ngFor="let usuario of listUsuarios">
+                                        <td>{{usuario.id_u}}</td>
+                                        <td>{{usuario.nombre_u}}</td>
+                                        <td>{{usuario.apellido_u}}</td>
+                                        <td>{{usuario.correo_u}}</td>
+                                        <td>{{usuario.telefono_u}}</td>
+                                        <td>
+                                            <i (click)="editarUsuario(usuario)" class="far fa-edit text-info"></i>
+                                        </td>
+                                        <td>
+                                            <i (click)="eliminarUsuario(usuario.id)"
+                                                class="far fa-trash-alt text-danger"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
