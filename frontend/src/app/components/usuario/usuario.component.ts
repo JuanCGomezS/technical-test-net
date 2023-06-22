@@ -4,11 +4,11 @@ import { ToastrService } from 'ngx-toastr';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
-  selector: 'app-administrador-usuario',
-  templateUrl: './administrador-usuario.component.html',
-  styleUrls: ['./administrador-usuario.component.css']
+  selector: 'app-usuario',
+  templateUrl: './usuario.component.html',
+  styleUrls: ['./usuario.component.css']
 })
-export class AdministradorUsuarioComponent implements OnInit {
+export class UsuarioComponent implements OnInit {
   public listUsuarios: any[] = [];
   public accion = 'Agregar';
   public form: FormGroup;
@@ -20,15 +20,17 @@ export class AdministradorUsuarioComponent implements OnInit {
     private toastr: ToastrService,
     private _usuarioService: UsuarioService
   ) {
+    
+  }
+
+  ngOnInit(): void {
     this.form = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.maxLength(9), Validators.minLength(7)]]
     })
-  }
-
-  ngOnInit(): void {
+    
     this.getUsers();
   }
 

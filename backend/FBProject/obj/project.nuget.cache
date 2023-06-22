@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VCn2txAD4OAoHUsCKppq66CqqEai9FEXMmuJ/JlzLnQXL/dQOtBgswymZtWCdgGIzUsZiF+MY7gluQm35uSK7A==",
+  "dgSpecHash": "8YFUGpmC3MS6hVwJgKsr7DuhYhDNVlC+f0dmGG8WtS89shq61tE4YAOUUryRVh/Fmi30HxgbelWyfAGGqaHyyg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\JuanDev\\Documents\\Projects\\Crud-Angular-Net\\Backend\\FBProject\\FBProject.csproj",
+  "projectFilePath": "C:\\Users\\JuanDev\\Documents\\Projects\\prueba tecnica\\backend\\FBProject\\FBProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\JuanDev\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\JuanDev\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

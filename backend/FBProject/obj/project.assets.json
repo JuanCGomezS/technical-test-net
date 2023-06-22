@@ -3728,11 +3728,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\JuanDev\\Documents\\Projects\\Crud-Angular-Net\\Backend\\FBProject\\FBProject.csproj",
+      "projectUniqueName": "C:\\Users\\JuanDev\\Documents\\Projects\\prueba tecnica\\backend\\FBProject\\FBProject.csproj",
       "projectName": "FBProject",
-      "projectPath": "C:\\Users\\JuanDev\\Documents\\Projects\\Crud-Angular-Net\\Backend\\FBProject\\FBProject.csproj",
+      "projectPath": "C:\\Users\\JuanDev\\Documents\\Projects\\prueba tecnica\\backend\\FBProject\\FBProject.csproj",
       "packagesPath": "C:\\Users\\JuanDev\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\JuanDev\\Documents\\Projects\\Crud-Angular-Net\\Backend\\FBProject\\obj\\",
+      "outputPath": "C:\\Users\\JuanDev\\Documents\\Projects\\prueba tecnica\\backend\\FBProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\JuanDev\\AppData\\Roaming\\NuGet\\NuGet.Config",
