@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { InicioComponent } from './components/inicio/inicio.component';
-import { UsuarioComponent } from './components/usuario/usuario.component';
-import { ClienteComponent } from './components/cliente/cliente.component';
-import { ProductoComponent } from './components/producto/producto.component';
-import { VentaComponent } from './components/venta/venta.component';
+import { UsuarioComponent } from './components/admin/usuario/usuario.component';
+import { ClienteComponent } from './components/admin/cliente/cliente.component';
+import { ProductoComponent } from './components/admin/producto/producto.component';
+import { VentaComponent } from './components/admin/venta/venta.component';
+import { RealizarVentaComponent } from './components/realizar-venta/realizar-venta.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: 'ventas',
     component: VentaComponent,
+  },
+  {
+    path: 'vender',
+    component: RealizarVentaComponent,
   },
   {
     path: '**',

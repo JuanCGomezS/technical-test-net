@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>{{ producto ? 'ACTUALIZAR' : 'AGREGAR' }} CLIENTE</h1>
+
+<form [formGroup]="form" (ngSubmit)="guardarProducto()">
+    <mat-dialog-content>
+        <!-- <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text">
+                <mat-icon>home</mat-icon>
+            </span>
+            <input formControlName="codigo" maxlength="10" type="text" pattern="[0-9]*" class="form-control" placeholder="Codigo">
+        </div> -->
+
+        <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text mr-4">
+                <mat-icon>home</mat-icon>
+            </span>
+            <input formControlName="nombre" type="text" class="form-control" placeholder="Nombre producto">
+        </div>
+
+        <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text">
+                <mat-icon>home</mat-icon>
+            </span>
+            <input formControlName="unidades" type="number" class="form-control" placeholder="Unidades">
+        </div>
+
+        <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text">
+                <mat-icon>home</mat-icon>
+            </span>
+            <input formControlName="valor" maxlength="10" type="text" pattern="[0-9]*" class="form-control" placeholder="Valor unitario">
+        </div>
+
+        <div class="d-grid gap-2 mt-5">
+            <button mat-flat-button mat-dialog-close type="button">Cancelar</button>
+            <button [disabled]="this.form.invalid" type="submit" class="btn btn-success btn-lg">Aceptar</button>
+        </div>
+    </mat-dialog-content>
+</form>

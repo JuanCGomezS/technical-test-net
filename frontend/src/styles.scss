@@ -5,6 +5,7 @@ html,
 body {
     height: 100%;
 }
+
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -16,4 +17,18 @@ h3,
 h4,
 p {
     margin: 0;
+}
+
+.titulo {
+    font-family: 'Ysabeau', sans-serif;
+    text-align: center;
+}
+
+.mat-button.mat-green {
+    color: white;
+}
+
+.mat-raised-button.mat-green, .mat-flat-button.mat-green {
+    background-color: #00c853;
+    color: white;
 }

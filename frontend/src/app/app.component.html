@@ -8,21 +8,32 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200"/>
+    <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
 
     <h4 class="name">John Smith</h4>
     <p class="designation">Software Engineer</p>
 
-    <mat-divider></mat-divider>
-
     <button mat-button class="menu-button" routerLink="/inicio">
       <mat-icon>home</mat-icon>
-      <span  style="color: white;">Inicio</span>
+      <span>Inicio</span>
     </button>
+
+    <mat-divider></mat-divider>
+
+    <span>Vender</span>
+
+    <button mat-button class="menu-button" routerLink="/vender">
+      <mat-icon>home</mat-icon>
+      <span>Realizar venta</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <span>Administrador</span>
 
     <button mat-button class="menu-button" routerLink="/usuarios">
       <mat-icon>person</mat-icon>
-      <span>Usuarios</span>
+      <span>Vendedores</span>
     </button>
 
     <button mat-button class="menu-button" routerLink="/clientes">
@@ -34,7 +45,7 @@
       <mat-icon>info</mat-icon>
       <span>Productos</span>
     </button>
-    
+
     <button mat-button class="menu-button" routerLink="/ventas">
       <mat-icon>info</mat-icon>
       <span>Ventas</span>
