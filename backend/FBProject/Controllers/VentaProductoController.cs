@@ -31,7 +31,7 @@ namespace FBProject.Controllers
 
         // GET api/<VentaProductoController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Gett(int id)
         {
             try
             {
@@ -43,6 +43,21 @@ namespace FBProject.Controllers
                 }
 
                 return Ok(venta_Producto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("products")]
+        public async Task<IActionResult> Get(int id_venta)
+        {
+            try
+            {
+                var productos = await _context.Venta_Producto.Where(p => p.ventaId == id_venta).ToListAsync();                
+
+                return Ok(productos);
             }
             catch (Exception ex)
             {
@@ -63,33 +78,6 @@ namespace FBProject.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-            }
-        }
-
-        // POST api/<VentaController>/VentaConProductos
-        [HttpPost("VentaConProductos")]
-        public async Task<IActionResult> PostVentaConProductos([FromBody] Venta_Producto ventaConProductos)
-        {
-            {
-                try
-                {
-                    _context.Add(ventaConProductos.Venta);
-                    await _context.SaveChangesAsync();
-
-                    foreach (var ventaProducto in ventaConProductos.Productos)
-                    {
-                        ventaConProductos.ventaId = ventaConProductos.Venta.Id;
-                        _context.Add(ventaConProductos);
-                    }
-
-                    await _context.SaveChangesAsync();
-
-                    return Ok(ventaConProductos.Venta);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
             }
         }
 

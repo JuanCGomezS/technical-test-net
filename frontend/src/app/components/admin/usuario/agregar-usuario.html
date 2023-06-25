@@ -1,12 +1,45 @@
-<h1 mat-dialog-title>{{ usuario ? 'ACTUALIZAR' : 'AGREGAR' }} CLIENTE</h1>
+<h1 mat-dialog-title>{{ usuario ? 'ACTUALIZAR' : 'AGREGAR' }} USUARIO</h1>
 
 <form [formGroup]="form" (ngSubmit)="guardarUsuario()">
     <mat-dialog-content>
         <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text mr-4">
+                <mat-icon>home</mat-icon>
+            </span>
+            <input formControlName="username" type="text" class="form-control" placeholder="Nombre Usuario">
+        </div>
+
+        <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text mr-4">
+                <mat-icon>home</mat-icon>
+            </span>
+            <input formControlName="password" [type]="passwordVisible ? 'text' : 'password'" class="form-control"
+                placeholder="Contraseña">
+            <span class="input-group-text" (click)="togglePasswordVisibility()">
+                <mat-icon>{{passwordVisible ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </span>
+        </div>
+
+        <div *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)">
+            <div class="error-message" *ngIf="form.get('password')?.errors?.['required']">
+                El campo Contraseña es requerido.
+            </div>
+            <div class="error-message" *ngIf="form.get('password')?.errors?.['pattern']">
+                La contraseña debe contener al menos una letra mayúscula, <br>
+                una letra minúscula, un número y un caracter especial.
+            </div>
+
+            <div class="error-message" *ngIf="form.get('password')?.errors?.['minlength']">
+                La contraseña debe tener al menos 8 caracteres.
+            </div>
+        </div>
+
+        <div class="input-group input-group-lg mb-3">
             <span class="input-group-text">
                 <mat-icon>home</mat-icon>
             </span>
-            <input formControlName="ident" maxlength="10" type="text" pattern="[0-9]*" class="form-control" placeholder="Identificación">
+            <input formControlName="ident" maxlength="10" type="text" pattern="[0-9]*" class="form-control"
+                placeholder="Identificación">
         </div>
 
         <div class="input-group input-group-lg mb-3">
@@ -27,21 +60,23 @@
             <span class="input-group-text">
                 <mat-icon>home</mat-icon>
             </span>
-            <input formControlName="telefono" maxlength="10" type="text" pattern="[0-9]*" class="form-control" placeholder="Telefono">
+            <input formControlName="telefono" maxlength="10" type="text" pattern="[0-9]*" class="form-control"
+                placeholder="Telefono">
         </div>
 
         <div class="input-group input-group-lg mb-3">
             <span class="input-group-text">
                 <mat-icon>home</mat-icon>
             </span>
-            <input formControlName="correo" type="text" class="form-control" placeholder="Correo">
+            <input formControlName="correo" type="email" class="form-control" placeholder="Correo">
         </div>
-
-        <div class="input-group input-group-lg mb-3">
-            <span class="input-group-text">
-                <mat-icon>home</mat-icon>
-            </span>
-            <input formControlName="password" type="text" class="form-control" placeholder="Contraseña">
+        <div *ngIf="form.get('correo')?.invalid && (form.get('correo')?.dirty || form.get('correo')?.touched)">
+            <div class="error-message" *ngIf="form.get('correo')?.errors?.['required']">
+                El campo Correo electrónico es requerido.
+            </div>
+            <div class="error-message" *ngIf="(form.get('correo')?.touched) && form.get('correo')?.errors?.['email']">
+                El Correo electrónico ingresado no es válido.
+            </div>
         </div>
 
         <div class="input-group input-group-lg mb-3">

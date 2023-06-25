@@ -7,37 +7,47 @@ import { ClienteComponent } from './components/admin/cliente/cliente.component';
 import { ProductoComponent } from './components/admin/producto/producto.component';
 import { VentaComponent } from './components/admin/venta/venta.component';
 import { RealizarVentaComponent } from './components/realizar-venta/realizar-venta.component';
-
+import { SigninComponent } from './components/signin/signin.component';
+import { AuthGuard } from './components/signin/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'inicio',
+    redirectTo: '/inicio',
+  },
+  {
+    path: 'entrar',
+    component: SigninComponent,
   },
   {
     path: 'inicio',
-    component: InicioComponent,
+    component: InicioComponent
   },
   {
     path: 'usuarios',
     component: UsuarioComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'clientes',
     component: ClienteComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'productos',
     component: ProductoComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'ventas',
     component: VentaComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'vender',
     component: RealizarVentaComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

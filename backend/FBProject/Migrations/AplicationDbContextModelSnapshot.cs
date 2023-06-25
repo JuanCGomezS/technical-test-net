@@ -76,8 +76,8 @@ namespace FBProject.Migrations
                     b.Property<int>("unidades_p")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("valor_p")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<long>("valor_p")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -92,10 +92,13 @@ namespace FBProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("apellido_u")
+                    b.Property<string>("RefreshToken")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("contraseña_u")
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("apellido_u")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("correo_u")
@@ -113,8 +116,20 @@ namespace FBProject.Migrations
                     b.Property<string>("nombre_u")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("password_u")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("role")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("telefono_u")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("username")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -158,13 +173,13 @@ namespace FBProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("productoId")
+                    b.Property<int?>("productoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("unidades")
+                    b.Property<int?>("unidades")
                         .HasColumnType("int");
 
-                    b.Property<int>("ventaId")
+                    b.Property<int?>("ventaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -197,19 +212,15 @@ namespace FBProject.Migrations
 
             modelBuilder.Entity("FBProject.Models.Venta_Producto", b =>
                 {
-                    b.HasOne("FBProject.Models.Producto", "Producto")
+                    b.HasOne("FBProject.Models.Producto", "Productos")
                         .WithMany()
-                        .HasForeignKey("productoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("productoId");
 
                     b.HasOne("FBProject.Models.Venta", "Venta")
                         .WithMany()
-                        .HasForeignKey("ventaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ventaId");
 
-                    b.Navigation("Producto");
+                    b.Navigation("Productos");
 
                     b.Navigation("Venta");
                 });

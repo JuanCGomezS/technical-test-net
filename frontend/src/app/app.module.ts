@@ -9,10 +9,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { HomeComponent } from './pages/home/home.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { AboutComponent } from './pages/about/about.component';
-import { HelpComponent } from './pages/help/help.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AgregarUsuario, UsuarioComponent } from './components/admin/usuario/usuario.component';
 import { AgregarCliente, ClienteComponent } from './components/admin/cliente/cliente.component';
@@ -24,21 +20,25 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RealizarVentaComponent } from './components/realizar-venta/realizar-venta.component';
+import { SigninComponent } from './components/signin/signin.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    ProfileComponent,
-    AboutComponent,
-    HelpComponent,
     NotFoundComponent,
     UsuarioComponent, AgregarUsuario,
     ClienteComponent, AgregarCliente,
     ProductoComponent, AgregarProducto,
     VentaComponent, AgregarVenta,
     InicioComponent,
-    RealizarVentaComponent],
+    RealizarVentaComponent,
+    SigninComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -47,6 +47,11 @@ import { RealizarVentaComponent } from './components/realizar-venta/realizar-ven
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatDividerModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,

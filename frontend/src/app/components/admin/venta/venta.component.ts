@@ -1,9 +1,19 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { VentaService } from 'src/app/services/venta.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { Chart, registerables } from 'chart.js';
+
 const debug = true;
+
+export interface VentaInt {
+  id: number,
+  fecha_v: any,
+  total_v: number,
+  usuarioId: number,
+  clienteId: number
+}
 
 @Component({
   selector: 'app-venta',
@@ -11,28 +21,87 @@ const debug = true;
   styleUrls: ['./venta.component.css']
 })
 export class VentaComponent implements OnInit {
-  public listVentas: any[] = [];
+  @ViewChild('myChart', { static: true }) myChart: ElementRef;
+
+  form: FormGroup;
+  listVentas: VentaInt[] = [];
+  prestamosArray: any[] = [];
+  displayedColumns: string[] = ['id', 'fecha_v', 'total_v', 'usuarioId', 'clienteId', 'acciones'];
+  monthlySales: { month: string, total: number }[] = [];
 
   constructor(
+    private fb: FormBuilder,
     public dialog: MatDialog,
     private toastr: ToastrService,
     private _ventaService: VentaService
   ) {
+    Chart.register(...registerables);
   }
 
   ngOnInit(): void {
     this.getVentas();
+
+    this.form = this.fb.group({
+      fechaIni: [''],
+      fechaFin: [''],
+    });
+
+  }
+
+  createChart(): void {
+    const chart = new Chart(this.myChart.nativeElement.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: this.monthlySales.map(sale => sale.month),
+        datasets: [
+          {
+            label: 'Ventas mensuales',
+            data: this.monthlySales.map(sale => sale.total),
+            backgroundColor: 'rgba(1, 150, 253, 0.2)',
+            borderColor: '#0196FD',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
   }
 
 
   getVentas() {
-    this._ventaService.getListVentas().subscribe((result: any) => {
-      if (debug) console.log(result);
-      this.listVentas = result;
+    this._ventaService.getListVentas().subscribe((data: any) => {
+      if (debug) console.log(data);
+      this.prestamosArray = data;
+      this.listVentas = data;
+      this.monthlySales = this.getMonthlySales(data);
+      this.createChart();
     }, error => {
       this.toastr.error(`Se ha presentado un error buscando Ventas`, '¡¡ERROR!!')
       console.error(error);
-    })
+    });
+  }
+
+  getMonthlySales(ventas: any[]): { month: string, total: number }[] {
+    const monthlySales: { [month: string]: number } = {};
+
+    ventas.forEach(venta => {
+      const date = new Date(venta.fecha_v);
+      const month = `${date.getFullYear()}-${date.getMonth() + 1}`;
+
+      if (!monthlySales[month]) {
+        monthlySales[month] = 0;
+      }
+
+      monthlySales[month] += venta.total_v;
+    });
+
+    return Object.entries(monthlySales).map(([month, total]) => ({ month, total }));
   }
 
   eliminarVenta(id: number) {
@@ -78,6 +147,32 @@ export class VentaComponent implements OnInit {
       if (res) this.getVentas();
     });
   }
+
+  buscarVenta() {
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.listVentas = [];
+    this.prestamosArray.forEach(element => {
+      if (element.fecha_v !== '') {
+        const fechaElement = new Date(element.fecha_v).setHours(0, 0, 0, 0);
+        const fechaIni = new Date(this.form.value.fechaIni).setHours(0, 0, 0, 0);
+        const fechaFin = new Date(this.form.value.fechaFin).setHours(0, 0, 0, 0);
+
+        if (fechaElement >= fechaIni && fechaElement <= fechaFin) {
+          this.listVentas.push({
+            id: element.id,
+            fecha_v: element.fecha_v,
+            total_v: element.total_v,
+            usuarioId: element.usuarioId,
+            clienteId: element.clienteId
+          });
+        }
+      }
+    });
+  }
+
 }
 
 @Component({
@@ -115,13 +210,13 @@ export class AgregarVenta implements OnInit {
     });
 
     this._ventaService.listProducts(this.venta.id).subscribe(data => {
-        if (debug) console.log(data);
-        this.listProducts = data;
-        
-      }, error => {
-        this.toastr.error(`Se ha presentado un error buscando productos de la venta ${this.venta.id}`, '¡¡ERROR!!')
-        console.error(error);
-      })
+      if (debug) console.log(data);
+      this.listProducts = data;
+
+    }, error => {
+      this.toastr.error(`Se ha presentado un error buscando productos de la venta ${this.venta.id}`, '¡¡ERROR!!')
+      console.error(error);
+    })
   }
 
   guardarVenta() {
