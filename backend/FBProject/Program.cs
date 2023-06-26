@@ -1,5 +1,8 @@
 using FBProject;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +18,27 @@ builder.Services.AddDbContext<AplicationDbContext>(options =>
 );
 
 builder.Services.AddCors(options => options.AddPolicy("AllowWebApp", builder =>
-    builder.WithOrigins("http://localhost:51851")
+    builder.WithOrigins("http://localhost:4200")
            .AllowAnyHeader()
            .AllowAnyMethod()));
 
-
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("very2023sceret.....")),
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 var app = builder.Build();
 

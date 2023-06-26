@@ -11,7 +11,13 @@ namespace FBProject.Models
         public string? identificacion_u { get; set; }
         public string? direccion_u { get; set; }
         public string? correo_u { get; set; }
-        public string? contraseña_u { get; set; }
+        public string? password_u { get; set; }
+        public string? username { get; set; }
+        public string? role { get; set; }
+        public string? token { get; set; }
+        public string? RefreshToken { get; set; }
+
+        public DateTime RefreshTokenExpiryTime { get; set; }
         public DateTime created_at { get; set; }
 
         public Usuario()

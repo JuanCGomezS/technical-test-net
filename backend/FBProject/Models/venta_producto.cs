@@ -9,7 +9,7 @@
 
         // Propiedades de navegación para las relaciones
         public Venta? Venta { get; set; }
-        public List<Producto>? Productos { get; set; }
+        public Producto? Productos { get; set; }
     }
 
 }

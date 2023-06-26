@@ -1,0 +1,53 @@
+<div class="container-fluid mt-5">
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="titulo">Listado de productos</h2>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Codigo</th>
+                                        <th>Producto</th>
+                                        <th>Unidades</th>
+                                        <th>Valor</th>
+                                        <th>Editar</th>
+                                        <th>Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let producto of listProductos">
+                                        <td>{{producto.id}}</td>
+                                        <td>{{producto.nombre_p}}</td>
+                                        <td>{{producto.unidades_p}}</td>
+                                        <td>{{producto.valor_p}}</td>
+                                        <td>
+                                            <button mat-icon-button color="primary" matTooltip="Editar Producto"
+                                                (click)="editarProducto(producto)">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button mat-icon-button color="warn" matTooltip="Eliminar Producto"
+                                                (click)="eliminarProducto(producto.id)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <button type="button" class="btn btn-success btn-lg" (click)="agregarProducto()">
+            Agregar
+        </button>
+    </div>
+</div>

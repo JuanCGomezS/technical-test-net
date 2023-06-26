@@ -1,0 +1,74 @@
+<div class="demo-button-container my-5">
+    <div>
+        <h2 class="titulo">Buscar Ventas</h2>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="buscarVenta()" class="demo-button">
+        <div class="row">
+            <div class="col-md-8">
+                <mat-form-field appearance="fill">
+                    <mat-label>Ingrese un rango de fechas</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate formControlName="fechaIni" placeholder="Fecha Inicio">
+                        <input matEndDate formControlName="fechaFin" placeholder="Fecha Fin">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="child d-grid gap-2">
+                    <button [disabled]="this.form.invalid" type="submit"
+                        class="btn btn-success btn-lg"><mat-icon>search</mat-icon></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<h3 *ngIf="listVentas.length==0" class="align">No existen ventas en estas fechas</h3>
+<h2 class="titulo">Listado de ventas</h2>
+
+<mat-table [dataSource]="listVentas" class="table">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha_v">
+        <mat-header-cell *matHeaderCellDef> Fecha Venta </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.fecha_v | date}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="total_v">
+        <mat-header-cell *matHeaderCellDef> Total vendido </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.total_v}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="usuarioId">
+        <mat-header-cell *matHeaderCellDef> Cliente </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.clienteId}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="clienteId">
+        <mat-header-cell *matHeaderCellDef> Vendedor </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.usuarioId}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="verProductos(element)">
+                <mat-icon>visibility</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<!-- <div class="w-50 mx-auto">
+    <canvas #myChart></canvas>
+</div> -->

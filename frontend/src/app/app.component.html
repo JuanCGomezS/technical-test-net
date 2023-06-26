@@ -1,51 +1,75 @@
-<mat-toolbar class="mat-elevation-z8">
-  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
-    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
-    <mat-icon *ngIf="sidenav.opened"> cerrar </mat-icon>
-  </button>
-  Supermercado Antojitos
+<mat-toolbar class="mat-elevation-z8 d-flex justify-content-between">
+  <div class="d-flex align-items-center">
+    <button mat-icon-button *ngIf="isUserLoggedIn" (click)="sidenav.toggle()">
+      <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+      <mat-icon *ngIf="sidenav.opened"> cerrar </mat-icon>
+    </button>
+    <button mat-button class="menu-button mx-1" routerLink="/inicio">
+      <span>Supermercado Antojitos</span>
+    </button>
+  </div>
+  <div class="d-flex" *ngIf="!isUserLoggedIn">
+    <button mat-button class="menu-button mx-1" routerLink="/entrar">
+      <span>Entrar</span>
+    </button>
+    <button mat-button class="menu-button" (click)="registratUser($event)">
+      <span>Registrar</span>
+    </button>
+  </div>
+  <div class="d-flex" *ngIf="isUserLoggedIn">
+    <button mat-button class="menu-button mx-1" (click)="logout()">
+      <span>Salir</span>
+    </button>
+  </div>
 </mat-toolbar>
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200"/>
+    <img class="avatar mat-elevation-z8" src="https://s3.amazonaws.com/jhj.shop/img/user.jpg" />
 
-    <h4 class="name">John Smith</h4>
-    <p class="designation">Software Engineer</p>
-
-    <mat-divider></mat-divider>
+    <h4 class="name">{{user?.nombre}} {{user?.apellido}}</h4>
+    <p class="designation">{{user?.rol}}</p>
 
     <button mat-button class="menu-button" routerLink="/inicio">
       <mat-icon>home</mat-icon>
-      <span  style="color: white;">Inicio</span>
+      <span>Inicio</span>
     </button>
+
+    <mat-divider></mat-divider>
+
+    <span>Vender</span>
+
+    <button mat-button class="menu-button" routerLink="/vender">
+      <mat-icon>point_of_sale</mat-icon>
+      <span>Realizar venta</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <span>Administrador</span>
 
     <button mat-button class="menu-button" routerLink="/usuarios">
       <mat-icon>person</mat-icon>
-      <span>Usuarios</span>
+      <span>Vendedores</span>
     </button>
 
     <button mat-button class="menu-button" routerLink="/clientes">
-      <mat-icon>person</mat-icon>
+      <mat-icon>group</mat-icon>
       <span>Clientes</span>
     </button>
 
     <button mat-button class="menu-button" routerLink="/productos">
-      <mat-icon>info</mat-icon>
+      <mat-icon>shopping_cart</mat-icon>
       <span>Productos</span>
     </button>
-    
+
     <button mat-button class="menu-button" routerLink="/ventas">
-      <mat-icon>info</mat-icon>
+      <mat-icon>attach_money</mat-icon>
       <span>Ventas</span>
     </button>
 
     <mat-divider></mat-divider>
 
-    <!-- <button mat-button class="menu-button" routerLink="/help">
-      <mat-icon>help</mat-icon>
-      <span>Help</span>
-    </button> -->
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content mat-elevation-z8">

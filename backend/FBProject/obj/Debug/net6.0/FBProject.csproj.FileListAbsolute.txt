@@ -259,3 +259,4 @@ C:\Users\JuanDev\Documents\Projects\prueba tecnica\backend\FBProject\obj\Debug\n
 C:\Users\JuanDev\Documents\Projects\prueba tecnica\backend\FBProject\obj\Debug\net6.0\FBProject.pdb
 C:\Users\JuanDev\Documents\Projects\prueba tecnica\backend\FBProject\obj\Debug\net6.0\FBProject.genruntimeconfig.cache
 C:\Users\JuanDev\Documents\Projects\prueba tecnica\backend\FBProject\obj\Debug\net6.0\ref\FBProject.dll
+C:\Users\JuanDev\Documents\Projects\prueba tecnica\backend\FBProject\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

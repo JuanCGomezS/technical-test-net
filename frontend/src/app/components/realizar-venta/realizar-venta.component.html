@@ -1,0 +1,190 @@
+<div class="container-fluid mt-5">
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="titulo">Venta</h2>
+                        <form [formGroup]="form" (ngSubmit)="guardarVenta()">
+                            <div class="row">
+                                <div class="col-md-6 my-5">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text">
+                                            <mat-icon>badge</mat-icon>
+                                        </span>
+                                        <input formControlName="ident" maxlength="10" type="text" pattern="[0-9]*"
+                                            class="form-control" placeholder="Identificación del cliente">
+                                    </div>
+                                    <div
+                                        *ngIf="form.get('ident')?.invalid && (form.get('ident')?.dirty || form.get('ident')?.touched)">
+                                        <div class="error-message" *ngIf="form.get('ident')?.errors?.['required']">
+                                            El campo de identificación es requerido.
+                                        </div>
+                                        <div class="error-message" *ngIf="form.get('ident')?.errors?.['pattern']">
+                                            El campo de identificación solo debe contener dígitos.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <button [disabled]="flags.invalidIdent" type="button" (click)="buscarCliente()"
+                                        class="btn btn-success btn-lg"><mat-icon>search</mat-icon></button>
+                                </div>
+
+                                <h3>Datos del cliente</h3>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text mr-4">
+                                            <mat-icon>person</mat-icon>
+                                        </span>
+                                        <input formControlName="nombre" type="text" class="form-control"
+                                            placeholder="Nombre">
+                                    </div>
+                                    <div
+                                        *ngIf="form.get('nombre')?.invalid && (form.get('nombre')?.dirty || form.get('nombre')?.touched)">
+                                        <div class="error-message" *ngIf="form.get('nombre')?.errors?.['required']">
+                                            El campo nombre es requerido.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text">
+                                            <mat-icon>person</mat-icon>
+                                        </span>
+                                        <input formControlName="apellido" type="text" class="form-control"
+                                            placeholder="Apellido">
+                                    </div>
+                                    <div
+                                        *ngIf="form.get('apellido')?.invalid && (form.get('apellido')?.dirty || form.get('apellido')?.touched)">
+                                        <div class="error-message" *ngIf="form.get('apellido')?.errors?.['required']">
+                                            El campo apellido es requerido.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text">
+                                            <mat-icon>phone</mat-icon>
+                                        </span>
+                                        <input formControlName="telefono" maxlength="10" type="text" pattern="[0-9]*"
+                                            class="form-control" placeholder="Telefono">
+                                    </div>
+                                    <div
+                                        *ngIf="form.get('telefono')?.invalid && (form.get('telefono')?.dirty || form.get('telefono')?.touched)">
+                                        <div class="error-message" *ngIf="form.get('telefono')?.errors?.['required']">
+                                            El campo telefono es requerido.
+                                        </div>
+                                        <div class="error-message" *ngIf="form.get('telefono')?.errors?.['pattern']">
+                                            El campo telefono solo debe contener dígitos.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text">
+                                            <mat-icon>location_on</mat-icon>
+                                        </span>
+                                        <input formControlName="direccion" type="text" class="form-control"
+                                            placeholder="Dirección">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text">
+                                            <mat-icon>mail</mat-icon>
+                                        </span>
+                                        <input formControlName="correo" type="email" class="form-control"
+                                            placeholder="Correo">
+                                    </div>
+
+                                    <div class="error-message"
+                                        *ngIf="(form.get('correo')?.touched) && form.get('correo')?.errors?.['email']">
+                                        El correo electrónico ingresado no es válido.
+                                    </div>
+                                </div>
+
+                                <h3>Productos</h3>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-text">
+                                                <mat-icon>shopping_cart</mat-icon>
+                                            </span>
+                                            <select formControlName="producto" class="form-control"
+                                                (ngModelChange)="changeProd($event)">
+                                                <option value="" disabled selected>Productos</option>
+                                                <option *ngFor="let producto of listProductos" [ngValue]="producto">
+                                                    Producto: {{producto?.nombre_p}} - Valor/U {{producto?.valor_p}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" *ngIf="unidades_dis">
+                                        <h5>Unidades disponibles {{unidades_dis}}</h5>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-text">
+                                                <mat-icon>widgets</mat-icon>
+                                            </span>
+                                            <input formControlName="unidades" type="number" class="form-control"
+                                                placeholder="Unidades">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center my-5">
+                                    <button [disabled]="flags.isDisabled" type="button" (click)="agregarProducto()"
+                                        class="btn btn-success btn-lg">Agregar producto</button>
+                                </div>
+
+                                <h3>Detalle de la venta</h3>
+
+                                <div class="table-responsive w-50 mx-auto d-block">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>Unidades</th>
+                                                <th>Precio</th>
+                                                <th>Borrar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let prod of listProdAdd">
+                                                <td>{{prod.nombre_p}}</td>
+                                                <td>{{prod.unidades}}</td>
+                                                <td>{{prod.valor}}</td>
+                                                <td>
+                                                    <button mat-icon-button color="warn" matTooltip="Borrar Producto"
+                                                        (click)="eliminarProd(prod)">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <span class="d-flex justify-content-center"><strong>TOTAL:
+                                        ${{total_venta}}</strong></span>
+                            </div>
+
+                            <div class="d-flex justify-content-center mt-5">
+                                <!-- <button type="button" class="btn btn-danger btn-lg mx-4">Cancelar</button> -->
+                                <button [disabled]="form.invalid" type="submit" class="btn btn-success btn-lg">Realizar
+                                    venta</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

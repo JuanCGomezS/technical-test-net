@@ -31,7 +31,7 @@ namespace FBProject.Controllers
 
         // GET api/<ClienteController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Gett(int id)
         {
             try
             {
@@ -49,6 +49,23 @@ namespace FBProject.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("byident")]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
+                string idAsString = id.ToString();
+                var cliente = await _context.Cliente.Where(p => p.identificacion_c == idAsString).ToListAsync();
+
+                return Ok(cliente);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         // POST api/<ClienteController>
         [HttpPost]

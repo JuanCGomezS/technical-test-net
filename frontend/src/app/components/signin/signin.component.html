@@ -1,0 +1,59 @@
+<div class="row m-0 my-5">
+    <div class="col-md-6 image-container mb-4">
+        <img class="login-logo" src="https://s3.amazonaws.com/jhj.shop/img/login-logo.jpg" width="100%" height="400px">
+    </div>
+    <div class="col-md-6">
+        <div class="container">
+            <form [formGroup]="form" (ngSubmit)="onSubmitform()">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Entrar</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group input-group-lg mb-3">
+                            <span class="input-group-text mr-4">
+                                <mat-icon>home</mat-icon>
+                            </span>
+                            <input formControlName="username" type="text" class="form-control"
+                                placeholder="Nombre Usuario">
+                        </div>
+                        <div
+                            *ngIf="form.get('username')?.invalid && (form.get('username')?.dirty || form.get('username')?.touched)">
+                            <div class="error-message" *ngIf="form.get('username')?.errors?.['required']">
+                                El campo Nombre de usuario es requerido.
+                            </div>
+                        </div>
+
+                        <div class="input-group input-group-lg mt-3">
+                            <span class="input-group-text mr-4">
+                                <mat-icon>home</mat-icon>
+                            </span>
+                            <input formControlName="password" [type]="passwordVisible ? 'text' : 'password'"
+                                class="form-control" placeholder="Contraseña">
+                            <span class="input-group-text" (click)="togglePasswordVisibility()">
+                                <mat-icon>{{passwordVisible ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </span>
+                        </div>
+                        <div
+                            *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)">
+                            <div class="error-message" *ngIf="form.get('password')?.errors?.['required']">
+                                El campo Contraseña es requerido.
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-5">
+                            <button [disabled]="this.form.invalid" type="submit"
+                                class="btn btn-success btn-lg">Entrar</button>
+                        </div>
+                        <div class="form-group">
+                            <div class="col">
+                                <span>¿No tiene un usuario? <a href="#"
+                                        (click)="registratUser($event)">Registrar</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<h1 mat-dialog-title *ngIf="!verProductos">{{ venta ? 'ACTUALIZAR' : 'AGREGAR' }} CLIENTE</h1>
+
+<form [formGroup]="form" (ngSubmit)="guardarVenta()" *ngIf="!verProductos">
+    <mat-dialog-content>
+        <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text mr-4">
+                <mat-icon>home</mat-icon>
+            </span>
+            <input formControlName="nombre" type="text" class="form-control" placeholder="Nombre producto">
+        </div>
+
+        <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text">
+                <mat-icon>home</mat-icon>
+            </span>
+            <input formControlName="unidades" type="number" class="form-control" placeholder="Unidades">
+        </div>
+
+        <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text">
+                <mat-icon>home</mat-icon>
+            </span>
+            <input formControlName="valor" maxlength="10" type="text" pattern="[0-9]*" class="form-control"
+                placeholder="Valor unitario">
+        </div>
+
+        <div class="d-grid gap-2 mt-5">
+            <button mat-flat-button mat-dialog-close type="button">Cancelar</button>
+            <button [disabled]="this.form.invalid" type="submit" class="btn btn-success btn-lg">Aceptar</button>
+        </div>
+    </mat-dialog-content>
+</form>
+
+<mat-dialog-content *ngIf="verProductos" >
+    <h2 class="titulo">Productos de la venta {{venta.id}}</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Producto</th>
+                    <th>Unidades</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let prod of listProducts">
+                    <td>{{prod.id}}</td>
+                    <td>{{prod.productoId}}</td>
+                    <td>{{prod.unidades}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-grid gap-2 mt-5">
+        <button mat-flat-button mat-dialog-close type="button">Cerrar</button>
+    </div>
+</mat-dialog-content>

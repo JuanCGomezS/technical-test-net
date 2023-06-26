@@ -9,22 +9,36 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { HomeComponent } from './pages/home/home.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { AboutComponent } from './pages/about/about.component';
-import { HelpComponent } from './pages/help/help.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { UsuarioComponent } from './components/usuario/usuario.component';
-import { ClienteComponent } from './components/cliente/cliente.component';
-import { ProductoComponent } from './components/producto/producto.component';
-import { VentaComponent } from './components/venta/venta.component';
+import { AgregarUsuario, UsuarioComponent } from './components/admin/usuario/usuario.component';
+import { AgregarCliente, ClienteComponent } from './components/admin/cliente/cliente.component';
+import { AgregarProducto, ProductoComponent } from './components/admin/producto/producto.component';
+import { AgregarVenta, VentaComponent } from './components/admin/venta/venta.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RealizarVentaComponent } from './components/realizar-venta/realizar-venta.component';
+import { SigninComponent } from './components/signin/signin.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ProfileComponent, AboutComponent, HelpComponent, NotFoundComponent, UsuarioComponent, ClienteComponent, ProductoComponent, VentaComponent, InicioComponent],
+  declarations: [
+    AppComponent,
+    NotFoundComponent,
+    UsuarioComponent, AgregarUsuario,
+    ClienteComponent, AgregarCliente,
+    ProductoComponent, AgregarProducto,
+    VentaComponent, AgregarVenta,
+    InicioComponent,
+    RealizarVentaComponent,
+    SigninComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,12 +47,18 @@ import { HttpClientModule } from '@angular/common/http'
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatDividerModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

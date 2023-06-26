@@ -1,0 +1,61 @@
+<div class="container-fluid mt-5">
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="titulo">Listado de vendedores</h2>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Identificación</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Usuario</th>
+                                        <th>Rol</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+                                        <th>Dirección</th>
+                                        <th>Editar</th>
+                                        <th>Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let usuario of listUsuarios">
+                                        <td>{{usuario.identificacion_u}}</td>
+                                        <td>{{usuario.nombre_u}}</td>
+                                        <td>{{usuario.apellido_u}}</td>
+                                        <td>{{usuario.username}}</td>
+                                        <td>{{usuario.role}}</td>
+                                        <td>{{usuario.correo_u}}</td>
+                                        <td>{{usuario.telefono_u}}</td>
+                                        <td>{{usuario.direccion_u}}</td>
+                                        <td>
+                                            <button mat-icon-button color="primary" matTooltip="Editar Cliente"
+                                                (click)="editarUsuario(usuario)">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button mat-icon-button color="warn" matTooltip="Editar Cliente"
+                                                (click)="eliminarUsuario(usuario.id)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <button type="button" class="btn btn-success btn-lg" (click)="agregarUser()">
+            Agregar
+        </button>
+    </div>
+</div>
