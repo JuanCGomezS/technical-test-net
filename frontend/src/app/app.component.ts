@@ -7,6 +7,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AuthenticationService } from './services/authentication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AgregarUsuario } from './components/admin/usuario/usuario.component';
+import { environment } from '../environments/environment';
 
 @UntilDestroy()
 @Component({
@@ -27,8 +28,7 @@ export class AppComponent implements OnInit {
     private router: Router
   ) {
     this.user = JSON.parse(this.authService.userDetails() ?? '{}');
-    console.log(this.user);
-    
+    if (environment.test) console.log('Vendedor Logueado', this.user);
   }
 
   public get isUserLoggedIn() {
@@ -76,6 +76,7 @@ export class AppComponent implements OnInit {
   logout() {
     localStorage.clear();
     this.sidenav.close();
-    this.router.navigate(['/inicio']);
+    location.reload();
+    //this.router.navigate(['/inicio']);
   }
 }

@@ -199,14 +199,23 @@ namespace FBProject.Controllers
         {
             try
             {
-                if(id != usuario.Id)
-                {
-                    return NotFound();
-                }
+                if (usuario == null)
+                    return BadRequest();
 
+                var passMessage = CheckPasswordStrength(usuario.password_u);
+                if (!string.IsNullOrEmpty(passMessage))
+                    return BadRequest(new { Message = passMessage.ToString() });
+
+                usuario.password_u = PasswordHasher.HashPassword(usuario.password_u);
+                usuario.role = "User";
+                usuario.token = "";
                 _context.Update(usuario);
                 await _context.SaveChangesAsync();
-                return Ok(new {message = "Usuario actualizado con exito"});
+                return Ok(new
+                {
+                    Status = 200,
+                    Message = "¡Usuario actualizado!"
+                });
             }
             catch (Exception ex)
             {

@@ -48,4 +48,11 @@ export class ProductoService {
 
     return this.http.post(url, producto);
   }
+
+  getListProductoPorVenta(): Observable<any> {
+    const url = `${environment.nodeUri}api/VentaProducto`;
+    if (environment.test) console.log(url);
+
+    return this.http.get(url);
+  }
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
-const debug = true;
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-usuario',
@@ -26,7 +26,7 @@ export class UsuarioComponent implements OnInit {
 
   getUsers() {
     this._usuarioService.getListUsuarios().subscribe((result: any) => {
-      if (debug) console.log(result);
+      if (environment.test) console.log(result);
       this.listUsuarios = result;
     }, error => {
       this.toastr.error(`Se ha presentado un error buscando los clientes`, '¡¡ERROR!!')
@@ -35,7 +35,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   eliminarUsuario(id: number) {
-    if (debug) console.log('Eliminando usuario ID: ' + id);
+    if (environment.test) console.log('Eliminando usuario ID: ' + id);
 
     this._usuarioService.deleteUser(id).subscribe(data => {
       this.toastr.warning(`El Usuario fue eliminado con exito`, 'Usuario eliminado')
@@ -47,7 +47,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   editarUsuario(usuario: any) {
-    if (debug) console.log(usuario);
+    if (environment.test) console.log(usuario);
 
     this.dialog.open(AgregarUsuario, {
       data: {
@@ -90,7 +90,7 @@ export class AgregarUsuario implements OnInit {
   }
 
   ngOnInit() {
-    if (debug) console.log(this.usuario);
+    if (environment.test) console.log(this.usuario);
 
     this.form = this.fb.group({
       nombre: [this.usuario?.nombre_u, Validators.required],
@@ -127,23 +127,23 @@ export class AgregarUsuario implements OnInit {
     if (this.usuario?.id) {
       usuario.id = this.usuario.id;
       this._usuarioService.updateUser(this.usuario.id, usuario).subscribe(data => {
-        if (debug) console.log(data);
+        if (environment.test) console.log(data);
 
-        this.toastr.success(`El Cliente ${usuario.nombre_c} fue actualizado con exito`, 'Cliente actualizado');
+        this.toastr.success(`El Cliente ${usuario.nombre_c} fue actualizado con exito`, 'Usuario actualizado');
         this.dialogRef.close(true);
       }, error => {
-        this.toastr.error(`Se ha presentado un error actualizando cliente`, '¡¡ERROR!!')
+        this.toastr.error(`Se ha presentado un error actualizando usuario`, '¡¡ERROR!!')
         console.error(error);
       })
 
     } else {
       this._usuarioService.saveUser(usuario).subscribe(data => {
-        if (debug) console.log(data);
+        if (environment.test) console.log(data);
 
-        this.toastr.success(`El Usuario ${usuario.nombre_u} fue agregado con exito`, 'Cliente agregado');
+        this.toastr.success(`El Usuario ${usuario.nombre_u} fue agregado con exito`, 'Usuario agregado');
         this.dialogRef.close(true);
       }, error => {
-        this.toastr.error(`Se ha presentado un error agregando cliente`, '¡¡ERROR!!')
+        this.toastr.error(`Se ha presentado un error agregando usuario`, '¡¡ERROR!!')
         console.error(error);
       })
     }
