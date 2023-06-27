@@ -55,7 +55,17 @@ namespace FBProject.Controllers
         {
             try
             {
-                var productos = await _context.Venta_Producto.Where(p => p.ventaId == id_venta).ToListAsync();                
+                var productos = await _context.Venta_Producto.Where(p => p.ventaId == id_venta).ToListAsync();
+
+                var prodIds = productos.Select(v => v.productoId).ToList();
+
+                var prods = await _context.Producto.Where(u => prodIds.Contains(u.Id)).ToListAsync();
+
+                foreach (var prod in productos)
+                {
+                    prod.Productos = prods.FirstOrDefault(u => u.Id == prod.productoId);
+                }
+
 
                 return Ok(productos);
             }

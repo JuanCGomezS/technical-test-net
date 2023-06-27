@@ -143,6 +143,16 @@ export class AgregarUsuario implements OnInit {
         this.toastr.success(`El Usuario ${usuario.nombre_u} fue agregado con exito`, 'Usuario agregado');
         this.dialogRef.close(true);
       }, error => {
+        console.log(error.error);
+        if (error.error.message == 'El correo ya existe') {
+          this.toastr.error(`El correo ingresado ya existe`, '¡¡ERROR!!')
+          return
+        }
+
+        if (error.error.message == 'El usuario ya existe') {
+          this.toastr.error(`El Nombre de usuario ingresado ya existe`, '¡¡ERROR!!')
+          return
+        }
         this.toastr.error(`Se ha presentado un error agregando usuario`, '¡¡ERROR!!')
         console.error(error);
       })

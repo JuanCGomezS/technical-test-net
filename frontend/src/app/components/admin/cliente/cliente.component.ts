@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
-const debug = false;
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-cliente',
@@ -23,11 +23,10 @@ export class ClienteComponent implements OnInit {
   ngOnInit(): void {
     this.getClientes();
   }
-
-
+  
   getClientes() {
     this._clienteService.getListClientes().subscribe((result: any) => {
-      if (debug) console.log(result);
+      if (environment.test) console.log(result);
       this.listClientes = result;
     }, error => {
       this.toastr.error(`Se ha presentado un error buscando los clientes`, '¡¡ERROR!!')
@@ -36,7 +35,7 @@ export class ClienteComponent implements OnInit {
   }
 
   eliminarCliente(id: number) {
-    if (debug) console.log('Eliminando cliente ID: ' + id);
+    if (environment.test) console.log('Eliminando cliente ID: ' + id);
 
     this._clienteService.deleteCliente(id).subscribe(data => {
       this.toastr.warning(`El Cliente fue eliminado con exito`, 'Cliente eliminado')
@@ -48,7 +47,7 @@ export class ClienteComponent implements OnInit {
   }
 
   editarCliente(cliente: any) {
-    if (debug) console.log(cliente);
+    if (environment.test) console.log(cliente);
 
     this.dialog.open(AgregarCliente, {
       data: {
@@ -89,7 +88,7 @@ export class AgregarCliente implements OnInit {
   }
 
   ngOnInit() {
-    if (debug) console.log(this.cliente);
+    if (environment.test) console.log(this.cliente);
 
     this.form = this.fb.group({
       nombre: [this.cliente?.nombre_c, Validators.required],
@@ -114,7 +113,7 @@ export class AgregarCliente implements OnInit {
     if (this.cliente?.id) {
       cliente.id = this.cliente.id;
       this._clienteService.updateCliente(this.cliente.id, cliente).subscribe(data => {
-        if (debug) console.log(data);
+        if (environment.test) console.log(data);
 
         this.toastr.success(`El Cliente ${cliente.nombre_c} fue actualizado con exito`, 'Cliente actualizado');
         this.dialogRef.close(true);
@@ -125,7 +124,7 @@ export class AgregarCliente implements OnInit {
 
     } else {
       this._clienteService.saveCliente(cliente).subscribe(data => {
-        if (debug) console.log(data);
+        if (environment.test) console.log(data);
 
         this.toastr.success(`El Cliente ${cliente.nombre_c} fue agregado con exito`, 'Cliente agregado');
         this.dialogRef.close(true);
