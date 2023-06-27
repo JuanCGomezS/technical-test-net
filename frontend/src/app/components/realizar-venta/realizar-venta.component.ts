@@ -1,11 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ProductoService } from 'src/app/services/producto.service';
-import { ClienteService } from 'src/app/services/cliente.service';
-import { VentaService } from 'src/app/services/venta.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { VentaService } from 'src/app/services/venta.service';
+import { ClienteService } from 'src/app/services/cliente.service';
+import { ProductoService } from 'src/app/services/producto.service';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+
 
 @Component({
   selector: 'app-realizar-venta',

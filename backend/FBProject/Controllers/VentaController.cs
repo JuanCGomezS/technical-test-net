@@ -21,6 +21,25 @@ namespace FBProject.Controllers
             try
             {
                 var listVentas = await _context.Venta.ToListAsync();
+
+                var userIds = listVentas.Select(v => v.UsuarioId).ToList();
+
+                var users = await _context.Usuario.Where(u => userIds.Contains(u.Id)).ToListAsync();
+
+                foreach (var venta in listVentas)
+                {
+                    venta.Usuario = users.FirstOrDefault(u => u.Id == venta.UsuarioId);
+                }
+
+                var customerIds = listVentas.Select(v => v.ClienteId).ToList();
+
+                var customer = await _context.Cliente.Where(u => customerIds.Contains(u.Id)).ToListAsync();
+
+                foreach (var venta in listVentas)
+                {
+                    venta.Cliente = customer.FirstOrDefault(u => u.Id == venta.ClienteId);
+                }
+
                 return Ok(listVentas);
             }
             catch (Exception ex)

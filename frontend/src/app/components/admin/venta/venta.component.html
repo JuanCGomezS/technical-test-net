@@ -54,12 +54,12 @@
 
     <ng-container matColumnDef="usuarioId">
         <mat-header-cell *matHeaderCellDef> Cliente </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.clienteId}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.cliente?.nombre_c}} {{element.cliente?.apellido_c}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="clienteId">
         <mat-header-cell *matHeaderCellDef> Vendedor </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.usuarioId}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.usuario?.nombre_u}} {{element.usuario?.apellido_u}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="acciones">

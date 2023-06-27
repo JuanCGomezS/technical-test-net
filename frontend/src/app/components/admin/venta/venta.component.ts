@@ -4,8 +4,7 @@ import { ReporteService } from 'src/app/services/reporte.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
-
-const debug = true;
+import { environment } from '../../../../environments/environment';
 
 export interface VentaInt {
   id: number,
@@ -13,6 +12,8 @@ export interface VentaInt {
   total_v: number,
   usuarioId: number,
   clienteId: number
+  usuario: any,
+  cliente: any
 }
 
 @Component({
@@ -23,7 +24,7 @@ export interface VentaInt {
 export class VentaComponent implements OnInit {
   form: FormGroup;
   listVentas: VentaInt[] = [];
-  prestamosArray: any[] = [];
+  filtroVentasArray: any[] = [];
   displayedColumns: string[] = ['id', 'fecha_v', 'total_v', 'usuarioId', 'clienteId', 'acciones'];
   reporteButton: boolean;
   fechaIni: number;
@@ -50,8 +51,8 @@ export class VentaComponent implements OnInit {
 
   getVentas() {
     this._ventaService.getListVentas().subscribe((data: any) => {
-      if (debug) console.log(data);
-      this.prestamosArray = data;
+      if (environment.test) console.log(data);
+      this.filtroVentasArray = data;
       this.listVentas = data;
     }, error => {
       this.toastr.error(`Se ha presentado un error buscando Ventas`, '¡¡ERROR!!')
@@ -77,7 +78,7 @@ export class VentaComponent implements OnInit {
   }
 
   eliminarVenta(id: number) {
-    if (debug) console.log('Eliminando venta ID: ' + id);
+    if (environment.test) console.log('Eliminando venta ID: ' + id);
 
     this._ventaService.deleteVenta(id).subscribe(data => {
       this.toastr.warning(`La venta fue eliminado con exito`, 'Venta eliminado')
@@ -89,7 +90,7 @@ export class VentaComponent implements OnInit {
   }
 
   editarVenta(venta: any) {
-    if (debug) console.log(venta);
+    if (environment.test) console.log(venta);
 
     this.dialog.open(AgregarVenta, {
       data: {
@@ -101,7 +102,7 @@ export class VentaComponent implements OnInit {
   }
 
   verProductos(venta: any) {
-    if (debug) console.log(venta);
+    if (environment.test) console.log(venta);
 
     this.dialog.open(AgregarVenta, {
       data: {
@@ -126,7 +127,7 @@ export class VentaComponent implements OnInit {
     }
 
     this.listVentas = [];
-    this.prestamosArray.forEach(element => {
+    this.filtroVentasArray.forEach(element => {
       if (element.fecha_v !== '') {
         const fechaElement = new Date(element.fecha_v).setHours(0, 0, 0, 0);
         this.fechaIni = new Date(this.form.value.fechaIni).setHours(0, 0, 0, 0);
@@ -138,7 +139,9 @@ export class VentaComponent implements OnInit {
             fecha_v: element.fecha_v,
             total_v: element.total_v,
             usuarioId: element.usuarioId,
-            clienteId: element.clienteId
+            clienteId: element.clienteId,
+            usuario: element.usuario,
+            cliente: element.cliente
           });
         }
       }
@@ -152,9 +155,12 @@ export class VentaComponent implements OnInit {
     const head = ["Id Venta", "Fecha Venta", " Total Venta", "Cliente", "Vendedor"];
 
     const body = Object(this.listVentas).map((data: any) => {
+      const fecha = new Date(data.fecha_v);
+      const formattedFecha = fecha.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
       const datos = [
         data.id,
-        data.fecha_v,
+        formattedFecha,
         `$${data.total_v}`,
         data.clienteId,
         data.usuarioId
@@ -196,8 +202,8 @@ export class AgregarVenta implements OnInit {
   }
 
   ngOnInit() {
-    if (debug) console.log(this.venta);
-    if (debug) console.log(this.verProductos);
+    if (environment.test) console.log(this.venta);
+    if (environment.test) console.log(this.verProductos);
 
     this.form = this.fb.group({
       total_v: [this.venta?.total_v, Validators.required],
@@ -206,7 +212,7 @@ export class AgregarVenta implements OnInit {
     });
 
     this._ventaService.listProducts(this.venta.id).subscribe(data => {
-      if (debug) console.log(data);
+      if (environment.test) console.log(data);
       this.listProducts = data;
 
     }, error => {
@@ -225,7 +231,7 @@ export class AgregarVenta implements OnInit {
     if (this.venta?.id) {
       venta.id = this.venta.id;
       this._ventaService.updateVenta(this.venta.id, venta).subscribe(data => {
-        if (debug) console.log(data);
+        if (environment.test) console.log(data);
 
         this.toastr.success(`El Venta ${venta.nombre_c} fue actualizado con exito`, 'Venta actualizado');
         this.dialogRef.close(true);
@@ -236,7 +242,7 @@ export class AgregarVenta implements OnInit {
 
     } else {
       this._ventaService.saveVenta(venta).subscribe(data => {
-        if (debug) console.log(data);
+        if (environment.test) console.log(data);
 
         this.toastr.success(`El Venta ${venta.nombre_c} fue agregado con exito`, 'Venta agregado');
         this.dialogRef.close(true);

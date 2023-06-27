@@ -12,7 +12,7 @@
                                         <th>Codigo</th>
                                         <th>Producto</th>
                                         <th>Unidades</th>
-                                        <th>Valor</th>
+                                        <th>Valor Und</th>
                                         <th>Editar</th>
                                         <th>Eliminar</th>
                                     </tr>
@@ -22,7 +22,7 @@
                                         <td>{{producto.id}}</td>
                                         <td>{{producto.nombre_p}}</td>
                                         <td>{{producto.unidades_p}}</td>
-                                        <td>{{producto.valor_p}}</td>
+                                        <td>{{producto.valor_p | currency:'$':'symbol':'1.0-0'}}</td>
                                         <td>
                                             <button mat-icon-button color="primary" matTooltip="Editar Producto"
                                                 (click)="editarProducto(producto)">

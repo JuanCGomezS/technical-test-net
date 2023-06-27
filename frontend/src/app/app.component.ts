@@ -22,10 +22,10 @@ export class AppComponent implements OnInit {
   user;
 
   constructor(
-    private observer: BreakpointObserver,
-    private authService: AuthenticationService,
+    private router: Router,
     public dialog: MatDialog,
-    private router: Router
+    private observer: BreakpointObserver,
+    private authService: AuthenticationService
   ) {
     this.user = JSON.parse(this.authService.userDetails() ?? '{}');
     if (environment.test) console.log('Vendedor Logueado', this.user);
@@ -77,6 +77,5 @@ export class AppComponent implements OnInit {
     localStorage.clear();
     this.sidenav.close();
     location.reload();
-    //this.router.navigate(['/inicio']);
   }
 }

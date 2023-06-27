@@ -1,8 +1,9 @@
 <mat-toolbar class="mat-elevation-z8 d-flex justify-content-between">
   <div class="d-flex align-items-center">
     <button mat-icon-button *ngIf="isUserLoggedIn" (click)="sidenav.toggle()">
-      <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
-      <mat-icon *ngIf="sidenav.opened"> cerrar </mat-icon>
+      <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+      <!-- <img *ngIf="sidenav.opened" class="w-10" src="https://s3.amazonaws.com/jhj.shop/img/icono.png" /> -->
+      <mat-icon *ngIf="sidenav.opened">close</mat-icon>
     </button>
     <button mat-button class="menu-button mx-1" routerLink="/inicio">
       <span>Supermercado Antojitos</span>

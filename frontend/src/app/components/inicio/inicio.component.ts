@@ -1,14 +1,18 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { delay, filter } from 'rxjs/operators';
+import { Chart, registerables } from 'chart.js';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { VentaService } from 'src/app/services/venta.service';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { ProductoService } from 'src/app/services/producto.service';
-import { VentaService } from 'src/app/services/venta.service';
-import { Chart, registerables } from 'chart.js';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 type Counts = {
   [key: string]: number;
 };
 
+@UntilDestroy()
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
@@ -30,6 +34,7 @@ export class InicioComponent {
   constructor(
     private toastr: ToastrService,
     private _ventaService: VentaService,
+    private observer: BreakpointObserver,
     private _clienteService: ClienteService,
     private _productoService: ProductoService
   ) {
@@ -42,6 +47,18 @@ export class InicioComponent {
       this.getClientes();
       this.getProductosPorVenta();
     }
+
+    /* this.observer
+      .observe(['(max-width: 800px)'])
+      .pipe(delay(1), untilDestroyed(this))
+      .subscribe((res) => {
+        console.log(res);
+
+        if (res.matches) {
+          
+        } else {
+        }
+      }); */
   }
 
   getVentas() {
@@ -182,9 +199,9 @@ export class InicioComponent {
     const prodCounts: Counts = {};
     this.listProductosVenta.forEach(sale => {
       if (prodCounts[sale.productoId]) {
-        prodCounts[sale.productoId]++;
+        prodCounts[sale.productoId] += sale.unidades;
       } else {
-        prodCounts[sale.productoId] = 1;
+        prodCounts[sale.productoId] = sale.unidades;
       }
     });
 
@@ -206,7 +223,7 @@ export class InicioComponent {
         labels: labels,
         datasets: [
           {
-            label: 'Producto más bendido',
+            label: 'Productos más vendidos',
             data: data,
             backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
           },
@@ -214,5 +231,4 @@ export class InicioComponent {
       },
     });
   }
-
 }

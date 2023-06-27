@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ProductoService } from 'src/app/services/producto.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
-const debug = false;
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-producto',
@@ -26,7 +26,7 @@ export class ProductoComponent implements OnInit {
 
   getProductos() {
     this._productoService.getListProductos().subscribe((result: any) => {
-      if (debug) console.log(result);
+      if (environment.test) console.log(result);
       this.listProductos = result;
     }, error => {
       this.toastr.error(`Se ha presentado un error buscando productos`, '¡¡ERROR!!')
@@ -35,7 +35,7 @@ export class ProductoComponent implements OnInit {
   }
 
   eliminarProducto(id: number) {
-    if (debug) console.log('Eliminando producto ID: ' + id);
+    if (environment.test) console.log('Eliminando producto ID: ' + id);
 
     this._productoService.deleteProducto(id).subscribe(data => {
       this.toastr.warning(`El Producto fue eliminado con exito`, 'Producto eliminado')
@@ -47,7 +47,7 @@ export class ProductoComponent implements OnInit {
   }
 
   editarProducto(producto: any) {
-    if (debug) console.log(producto);
+    if (environment.test) console.log(producto);
 
     this.dialog.open(AgregarProducto, {
       data: {
@@ -88,7 +88,7 @@ export class AgregarProducto implements OnInit {
   }
 
   ngOnInit() {
-    if (debug) console.log(this.producto);
+    if (environment.test) console.log(this.producto);
 
     this.form = this.fb.group({
       //codigo: [this.producto?.codigo_p, Validators.required],
@@ -109,7 +109,7 @@ export class AgregarProducto implements OnInit {
     if (this.producto?.id) {
       usuario.id = this.producto.id;
       this._productoService.updateProducto(this.producto.id, usuario).subscribe(data => {
-        if (debug) console.log(data);
+        if (environment.test) console.log(data);
 
         this.toastr.success(`El Producto ${usuario.nombre_c} fue actualizado con exito`, 'Producto actualizado');
         this.dialogRef.close(true);
@@ -120,7 +120,7 @@ export class AgregarProducto implements OnInit {
 
     } else {
       this._productoService.saveProducto(usuario).subscribe(data => {
-        if (debug) console.log(data);
+        if (environment.test) console.log(data);
 
         this.toastr.success(`El Producto ${usuario.nombre_c} fue agregado con exito`, 'Producto agregado');
         this.dialogRef.close(true);
