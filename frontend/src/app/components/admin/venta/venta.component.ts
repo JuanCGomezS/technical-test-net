@@ -1,9 +1,9 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { VentaService } from 'src/app/services/venta.service';
+import { ReporteService } from 'src/app/services/reporte.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { Chart, registerables } from 'chart.js';
 
 const debug = true;
 
@@ -21,21 +21,21 @@ export interface VentaInt {
   styleUrls: ['./venta.component.css']
 })
 export class VentaComponent implements OnInit {
-  @ViewChild('myChart', { static: true }) myChart: ElementRef;
-
   form: FormGroup;
   listVentas: VentaInt[] = [];
   prestamosArray: any[] = [];
   displayedColumns: string[] = ['id', 'fecha_v', 'total_v', 'usuarioId', 'clienteId', 'acciones'];
-  monthlySales: { month: string, total: number }[] = [];
+  reporteButton: boolean;
+  fechaIni: number;
+  fechaFin: number;
 
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
     private toastr: ToastrService,
-    private _ventaService: VentaService
+    private _ventaService: VentaService,
+    private _imprimirService: ReporteService
   ) {
-    Chart.register(...registerables);
   }
 
   ngOnInit(): void {
@@ -48,39 +48,11 @@ export class VentaComponent implements OnInit {
 
   }
 
-  createChart(): void {
-    const chart = new Chart(this.myChart.nativeElement.getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: this.monthlySales.map(sale => sale.month),
-        datasets: [
-          {
-            label: 'Ventas mensuales',
-            data: this.monthlySales.map(sale => sale.total),
-            backgroundColor: 'rgba(1, 150, 253, 0.2)',
-            borderColor: '#0196FD',
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-  }
-
-
   getVentas() {
     this._ventaService.getListVentas().subscribe((data: any) => {
       if (debug) console.log(data);
       this.prestamosArray = data;
       this.listVentas = data;
-      this.monthlySales = this.getMonthlySales(data);
-      this.createChart();
     }, error => {
       this.toastr.error(`Se ha presentado un error buscando Ventas`, '¡¡ERROR!!')
       console.error(error);
@@ -157,10 +129,10 @@ export class VentaComponent implements OnInit {
     this.prestamosArray.forEach(element => {
       if (element.fecha_v !== '') {
         const fechaElement = new Date(element.fecha_v).setHours(0, 0, 0, 0);
-        const fechaIni = new Date(this.form.value.fechaIni).setHours(0, 0, 0, 0);
-        const fechaFin = new Date(this.form.value.fechaFin).setHours(0, 0, 0, 0);
+        this.fechaIni = new Date(this.form.value.fechaIni).setHours(0, 0, 0, 0);
+        this.fechaFin = new Date(this.form.value.fechaFin).setHours(0, 0, 0, 0);
 
-        if (fechaElement >= fechaIni && fechaElement <= fechaFin) {
+        if (fechaElement >= this.fechaIni && fechaElement <= this.fechaFin) {
           this.listVentas.push({
             id: element.id,
             fecha_v: element.fecha_v,
@@ -171,8 +143,32 @@ export class VentaComponent implements OnInit {
         }
       }
     });
+
+    this.reporteButton = true;
   }
 
+  imprimi() {
+    console.log(this.listVentas);
+    const head = ["Id Venta", "Fecha Venta", " Total Venta", "Cliente", "Vendedor"];
+
+    const body = Object(this.listVentas).map((data: any) => {
+      const datos = [
+        data.id,
+        data.fecha_v,
+        `$${data.total_v}`,
+        data.clienteId,
+        data.usuarioId
+      ];
+      return datos;
+    });
+
+    const inicio = new Date(this.fechaIni)
+    const fin = new Date(this.fechaFin)
+    const namefile = `${inicio.getDate()}-${inicio.getMonth() + 1}-${inicio.getFullYear()} a ${fin.getDate()}-${fin.getMonth() + 1}-${fin.getFullYear()}`
+
+    this._imprimirService.imprimir(head, body, `Ventas Antojitos ${namefile}`, namefile, true)
+
+  }
 }
 
 @Component({

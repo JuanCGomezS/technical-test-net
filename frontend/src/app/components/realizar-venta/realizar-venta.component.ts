@@ -136,7 +136,6 @@ export class RealizarVentaComponent implements OnInit {
         this.unidades_dis = prod.unidades_p;
 
         const existingProduct = this.listProdAdd.findIndex(p => p.id === prodCopy.id);
-        console.log(existingProduct);
 
         if (existingProduct !== -1) {
           this.listProdAdd[existingProduct].unidades += prodCopy.unidades;

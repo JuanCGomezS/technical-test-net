@@ -160,7 +160,7 @@
                                             <tr *ngFor="let prod of listProdAdd">
                                                 <td>{{prod.nombre_p}}</td>
                                                 <td>{{prod.unidades}}</td>
-                                                <td>{{prod.valor}}</td>
+                                                <td>{{prod.valor | currency:'$':'symbol':'1.0-0'}}</td>
                                                 <td>
                                                     <button mat-icon-button color="warn" matTooltip="Borrar Producto"
                                                         (click)="eliminarProd(prod)">
