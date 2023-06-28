@@ -2,7 +2,6 @@
   <div class="d-flex align-items-center">
     <button mat-icon-button *ngIf="isUserLoggedIn" (click)="sidenav.toggle()">
       <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
-      <!-- <img *ngIf="sidenav.opened" class="w-10" src="https://s3.amazonaws.com/jhj.shop/img/icono.png" /> -->
       <mat-icon *ngIf="sidenav.opened">close</mat-icon>
     </button>
     <button mat-button class="menu-button mx-1" routerLink="/inicio">
@@ -49,22 +48,22 @@
 
     <span>Administrador</span>
 
-    <button mat-button class="menu-button" routerLink="/usuarios">
+    <button mat-button class="menu-button" routerLink="/admin/usuarios">
       <mat-icon>person</mat-icon>
       <span>Vendedores</span>
     </button>
 
-    <button mat-button class="menu-button" routerLink="/clientes">
+    <button mat-button class="menu-button" routerLink="/admin/clientes">
       <mat-icon>group</mat-icon>
       <span>Clientes</span>
     </button>
 
-    <button mat-button class="menu-button" routerLink="/productos">
+    <button mat-button class="menu-button" routerLink="/admin/productos">
       <mat-icon>shopping_cart</mat-icon>
       <span>Productos</span>
     </button>
 
-    <button mat-button class="menu-button" routerLink="/ventas">
+    <button mat-button class="menu-button" routerLink="/admin/ventas">
       <mat-icon>attach_money</mat-icon>
       <span>Ventas</span>
     </button>
