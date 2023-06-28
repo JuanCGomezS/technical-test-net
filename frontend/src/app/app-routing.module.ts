@@ -25,24 +25,9 @@ const routes: Routes = [
     component: InicioComponent
   },
   {
-    path: 'usuarios',
-    component: UsuarioComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'clientes',
-    component: ClienteComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'productos',
-    component: ProductoComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'ventas',
-    component: VentaComponent,
-    canActivate: [AuthGuard]
+    path: 'admin',
+    loadChildren: () => import('./components/admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'vender',
@@ -59,4 +44,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
