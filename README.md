@@ -2,6 +2,8 @@
 
 Esta aplicación web fue creada para solucionar el problema de la falta de control sobre los productos y ventas en un supermercado. La gerencia no puede saber a ciencia cierta si aún quedan unidades de un producto y tampoco del total de ventas realizadas en un día.
 
+![shop](https://github.com/JuanCGomezS/technical-test-net/assets/76191481/7293cc03-e3d4-49b8-888b-fa2c9b213e2c)
+
 ## Características
 
 - Administrador de vendedores, clientes, productos y ventas.
@@ -37,4 +39,5 @@ Esta aplicación web fue creada para solucionar el problema de la falta de contr
 ## Contribuciones y soporte
 
 Si tienes alguna sugerencia, problema o pregunta, por favor crea un issue en este repositorio.
+
 
