@@ -77,7 +77,7 @@ namespace FBProject.Controllers
 
         // POST api/<VentaProductoController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Venta_Producto venta_Producto)
+        public async Task<IActionResult> Post([FromBody] VentaProducto venta_Producto)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace FBProject.Controllers
 
         // PUT api/<VentaProductoController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Venta_Producto venta_Producto)
+        public async Task<IActionResult> Put(int id, [FromBody] VentaProducto venta_Producto)
         {
             try
             {

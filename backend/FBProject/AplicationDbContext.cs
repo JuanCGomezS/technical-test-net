@@ -30,7 +30,7 @@ namespace FBProject
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Venta> Venta { get; set; }
-        public DbSet<Venta_Producto> Venta_Producto { get; set; }
+        public DbSet<VentaProducto> Venta_Producto { get; set; }
 
     }
 }

@@ -34,18 +34,18 @@ namespace FBProject.Controllers
                     return BadRequest();
 
                 var user = await _context.Usuario
-                    .FirstOrDefaultAsync(x => x.username == usuario.username);
+                    .FirstOrDefaultAsync(x => x.Username == usuario.Username);
 
                 if (user == null)
                     return NotFound(new { Message = "Usuario no encontrado" });
 
-                if (!PasswordHasher.VerifyPassword(usuario.password_u, user.password_u))
+                if (!PasswordHasher.VerifyPassword(usuario.Password_u, user.Password_u))
                 {
                     return BadRequest(new { Message = "Contraseña incorrecta" });
                 }
 
-                user.token = CreateJwt(user);
-                var newAccessToken = user.token;
+                user.Token = CreateJwt(user);
+                var newAccessToken = user.Token;
                 var newRefreshToken = CreateRefreshToken();
                 user.RefreshToken = newRefreshToken;
                 user.RefreshTokenExpiryTime = DateTime.Now.AddDays(5);
@@ -70,9 +70,9 @@ namespace FBProject.Controllers
             var identity = new ClaimsIdentity(new Claim[]
             {
                 new Claim("id",$"{user.Id}"),
-                new Claim("nombre",$"{user.nombre_u}"),
-                new Claim("apellido",$"{user.apellido_u}"),
-                new Claim("rol",$"{user.role}")
+                new Claim("nombre",$"{user.Nombre_u}"),
+                new Claim("apellido",$"{user.Apellido_u}"),
+                new Claim("rol",$"{user.Role}")
             });
 
             var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
@@ -147,20 +147,20 @@ namespace FBProject.Controllers
                     return BadRequest();
 
                 // check email
-                if (await CheckEmailExistAsync(usuario.correo_u))
+                if (await CheckEmailExistAsync(usuario.Correo_u))
                     return BadRequest(new { Message = "El correo ya existe" });
 
                 //check username
-                if (await CheckUsernameExistAsync(usuario.username))
+                if (await CheckUsernameExistAsync(usuario.Username))
                     return BadRequest(new { Message = "El usuario ya existe" });
 
-                var passMessage = CheckPasswordStrength(usuario.password_u);
+                var passMessage = CheckPasswordStrength(usuario.Password_u);
                 if (!string.IsNullOrEmpty(passMessage))
                     return BadRequest(new { Message = passMessage.ToString() });
 
-                usuario.password_u = PasswordHasher.HashPassword(usuario.password_u);
-                usuario.role = "User";
-                usuario.token = "";
+                usuario.Password_u = PasswordHasher.HashPassword(usuario.Password_u);
+                usuario.Role = 1;
+                usuario.Token = "";
                 await _context.AddAsync(usuario);
                 await _context.SaveChangesAsync();
                 return Ok(new
@@ -176,10 +176,10 @@ namespace FBProject.Controllers
         }
 
         private Task<bool> CheckEmailExistAsync(string? email)
-            => _context.Usuario.AnyAsync(x => x.correo_u == email);
+            => _context.Usuario.AnyAsync(x => x.Correo_u == email);
 
         private Task<bool> CheckUsernameExistAsync(string? username)
-            => _context.Usuario.AnyAsync(x => x.username == username);
+            => _context.Usuario.AnyAsync(x => x.Username == username);
 
         private static string CheckPasswordStrength(string pass)
         {
@@ -202,13 +202,13 @@ namespace FBProject.Controllers
                 if (usuario == null)
                     return BadRequest();
 
-                var passMessage = CheckPasswordStrength(usuario.password_u);
+                var passMessage = CheckPasswordStrength(usuario.Password_u);
                 if (!string.IsNullOrEmpty(passMessage))
                     return BadRequest(new { Message = passMessage.ToString() });
 
-                usuario.password_u = PasswordHasher.HashPassword(usuario.password_u);
-                usuario.role = "User";
-                usuario.token = "";
+                usuario.Password_u = PasswordHasher.HashPassword(usuario.Password_u);
+                usuario.Role = 1;
+                usuario.Token = "";
                 _context.Update(usuario);
                 await _context.SaveChangesAsync();
                 return Ok(new

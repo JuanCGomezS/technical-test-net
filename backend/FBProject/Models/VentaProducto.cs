@@ -1,6 +1,6 @@
 ﻿namespace FBProject.Models
 {
-    public class Venta_Producto
+    public class VentaProducto
     {
         public int Id { get; set; }
         public int? ventaId { get; set; }
