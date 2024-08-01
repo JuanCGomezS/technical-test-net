@@ -10,8 +10,6 @@ using System.Security.Cryptography;
 using AngularAuthYtAPI.Models.Dto;
 using System.Text.RegularExpressions;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace FBProject.Controllers
 {
     [Route("api/[controller]")]
@@ -30,11 +28,21 @@ namespace FBProject.Controllers
         {
             try
             {
+                Usuario? user = null;
+
                 if (usuario == null)
                     return BadRequest();
 
-                var user = await _context.Usuario
+                if (usuario.Username.Contains("@"))
+                {
+                    user = await _context.Usuario
+                    .FirstOrDefaultAsync(x => x.Correo_u == usuario.Username);
+                }
+                else
+                {
+                    user = await _context.Usuario
                     .FirstOrDefaultAsync(x => x.Username == usuario.Username);
+                }
 
                 if (user == null)
                     return NotFound(new { Message = "Usuario no encontrado" });

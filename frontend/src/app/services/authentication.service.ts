@@ -11,7 +11,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AuthenticationService {
   userName: any;
   headers = new HttpHeaders().set('content-type', 'application/json');
-  private debug = false;
+  private debug = true;
 
   private myApiUrl = `api/usuario/`;
   constructor(
